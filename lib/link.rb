@@ -1,9 +1,10 @@
 class Link < Post
-  attr_accessor :created_at, :text, :url
+  attr_accessor :created_at, :text, :url, :postType
     
   def initialize
     super
     @url = ""
+    @postType = "Link"
   end
 
   def read_from_console 

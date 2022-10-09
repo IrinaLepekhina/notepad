@@ -1,11 +1,12 @@
 require "date"
 
 class Task < Post
-  attr_accessor :created_at, :text, :due_date
+  attr_accessor :created_at, :text, :due_date, :postType
   
   def initialize
     super
     @due_date = Time.now
+    @postType = "Task"
   end
     
   def read_from_console

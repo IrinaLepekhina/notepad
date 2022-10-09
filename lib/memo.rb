@@ -1,5 +1,10 @@
 class Memo < Post
-  attr_accessor :created_at, :text
+  attr_accessor :created_at, :text, :postType
+
+  def initialize
+    super
+    @postType = "Memo"
+  end
 
   def read_from_console #todo
     puts "Дневник"

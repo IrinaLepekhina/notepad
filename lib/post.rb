@@ -1,9 +1,10 @@
 class Post
-  attr_accessor :created_at, :text
+  attr_accessor :created_at, :text, :postType
 
   def initialize
     @created_at = Time.now
     @text = []
+    @postType = nil
   end
 
   def read_from_console

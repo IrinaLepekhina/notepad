@@ -14,21 +14,28 @@ require current_path + '/lib/memo.rb'
 require current_path + '/lib/task.rb'
 require current_path + '/lib/link.rb'
 
+require current_path + '/factory/formatter.rb'
+require current_path + '/factory/creator.rb'
+require current_path + '/factory/creator_memo.rb'
+require current_path + '/factory/creator_task.rb'
+require current_path + '/factory/creator_link.rb'
+
+
 puts 'Привет, я твой блокнот!'
 puts
 puts 'Что хотите записать в блокнот?'
 
+creators = [CreatorTask.new, CreatorMemo.new, CreatorLink.new]
 choice = -1
-choices = Post.post_types
 
-until choice >= 0 && choice <  choices.size
-  choices.each_with_index do |type, index|
-    puts "\t#{index}. #{type}"
+until choice >= 0 && choice <  creators.size
+  creators.each do |creator|
+    puts "#{creator.class} create Product:\t #{creator.factoryMethod.postType}"
   end
   choice = STDIN.gets.chomp.to_i
 end
 
-entry = Post.post_create(choice)
+entry = Creator.generate(choice)
 
 entry.read_from_console
 
