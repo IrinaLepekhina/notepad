@@ -28,7 +28,7 @@ class Post
     # "#{current_path}/user_data/#{self.class.name}_#{file_time}.txt"
 
     file_name = @created_at.strftime("#{self.class.name}_%Y-%m-%d_%H_%M.txt")
-    return current_path + "/user_data/" + file_name
+    return current_path + "/../user_data/" + file_name
   end
 
   def self.descendants
