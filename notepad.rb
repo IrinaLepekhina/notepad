@@ -24,13 +24,14 @@ require current_path + '/factory/creator_link.rb'
 puts 'Привет, я твой блокнот!'
 puts
 puts 'Что хотите записать в блокнот?'
+puts
 
 creators = [CreatorTask.new, CreatorMemo.new, CreatorLink.new]
 choice = -1
 
 until choice >= 0 && choice <  creators.size
-  creators.each do |creator|
-    puts "#{creator.class} create Product:\t #{creator.factoryMethod.postType}"
+  creators.each_with_index do |creator, index|
+    puts "#{index} create Post:\t #{creator.factoryMethod.postType}"
   end
   choice = STDIN.gets.chomp.to_i
 end

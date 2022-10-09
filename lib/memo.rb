@@ -7,18 +7,20 @@ class Memo < Post
   end
 
   def read_from_console #todo
-    puts "Дневник"
-    puts "запись оканчивается строчкой \"end\" в файле."
+    puts
+    puts "Введите текст"
+    puts "Запись оканчивается строчкой"
+    puts "\"end\""
     puts
 
     line = nil
     text = []
 
-    while line != "end" do
+    until line == "end" do
       line = STDIN.gets.encode("UTF-8").chomp
-      text << line
+      @text << line
     end
-    text.pop
+    @text.pop
   end
 
   def to_string 
@@ -26,3 +28,4 @@ class Memo < Post
     @text.unshift(time_string)
   end
 end
+

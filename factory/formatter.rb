@@ -1,4 +1,5 @@
 class Formatter
+
   def self.for(type)
     case type
     when 0
