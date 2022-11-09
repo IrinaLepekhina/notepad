@@ -1,5 +1,5 @@
 class CreatorTask < Creator
-  def factoryMethod
+  def factory_method
       Task.new
   end
 end

@@ -1,10 +1,10 @@
 class Creator
-  def factoryMethod
+  def factory_method
     Post.new
   end
 
-  def self.generate(type)
-    Formatter.for(type).factoryMethod
+  def self.generate(choice, post_types)
+    Formatter.for(choice, post_types).factory_method
   end
   
 

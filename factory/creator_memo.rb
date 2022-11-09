@@ -1,5 +1,5 @@
 class CreatorMemo < Creator
-  def factoryMethod
+  def factory_method
       Memo.new
   end
 end

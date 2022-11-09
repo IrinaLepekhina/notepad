@@ -22,6 +22,10 @@ class Post
   def to_string
   end
 
+  def self.types
+    ObjectSpace.each_object(Class).select { |klass| klass < self }.map.with_index(1) { |x, i| [i, x.name] }.to_h
+  end
+
   def save
     file = File.new(file_path, "w:UTF-8")
     to_string.each  do |string|
@@ -40,5 +44,5 @@ class Post
   def to_db_hash(table)
     {'post_type' => self.class.name, 'created_at' => @created_at.strftime('%Y-%m-%d').to_s}
   end
-  
+
 end

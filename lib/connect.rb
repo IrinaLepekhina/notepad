@@ -1,5 +1,5 @@
 class Connect
- 
+
   def save_to_db(query)
     begin
     # Initialize connection variables.

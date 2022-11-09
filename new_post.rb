@@ -30,23 +30,21 @@ puts
 puts 'Что хотите записать в блокнот?'
 puts
 
-pt = {"Task" => CreatorTask.new, "Memo" => CreatorMemo.new, "Link" => CreatorLink.new}
-creators = pt.values
+post_types = Post.types
 choice = -1
 
-until choice >= 0 && choice <  pt.size
-  creators.each_with_index do |creator, index|
-    puts "#{index} create Post:\t #{creator.factoryMethod.post_type}"
+until choice > 0 && choice <=  post_types.size
+  post_types.each do |i, type|
+    puts "#{i} create Post:\t #{type}"
   end
   choice = STDIN.gets.chomp.to_i
 end
 
-entry = Creator.generate(choice)
+entry = Creator.generate(choice, post_types)
 
 entry.read_from_console
 
-table = "posts"
-puts query = entry.to_db_hash(table)
+query = entry.to_db_hash(table = "posts")
 
 id = Connect.new.save_to_db(query)
 

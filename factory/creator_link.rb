@@ -1,5 +1,5 @@
 class CreatorLink < Creator
-  def factoryMethod
+  def factory_method
       Link.new
   end
 end

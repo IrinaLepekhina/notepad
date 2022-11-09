@@ -1,13 +1,13 @@
 class Formatter
 
-  def self.for(type)
-    case type
-    when 0
-      CreatorTask.new
-    when 1
+  def self.for(choice, post_types)
+    case post_types[choice]
+    when "Memo"
       CreatorMemo.new
-    when 2
+    when "Link"
       CreatorLink.new
+    when "Task"
+      CreatorTask.new
     else
       raise 'Unsupported type of report'
     end
