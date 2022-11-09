@@ -1,12 +1,10 @@
-require "date"
-
 class Task < Post
-  attr_accessor :created_at, :text, :due_date, :postType
+  attr_accessor :created_at, :text, :due_date, :post_type
   
   def initialize
     super
     @due_date = Time.now
-    @postType = "Task"
+    @post_type = "Task"
   end
     
   def read_from_console
@@ -25,6 +23,23 @@ class Task < Post
     time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
 
     [deadline, @text, time_string]
+  end
+
+  def to_db_hash(table)
+    attr_hash =  super.merge({
+        "text" => @text,
+        "due_date" => @due_date.to_s
+      })
+
+    db_hash = @@default_hash.merge(attr_hash)
+
+    substituted_columns = db_hash.keys.map { '?' }.join(', ')
+      
+    prepared_query = "INSERT INTO #{table} VALUES (#{substituted_columns});"
+      
+    values = db_hash.values
+      
+    {prepared_query: prepared_query, values: values}
   end
     
 end
