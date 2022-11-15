@@ -10,11 +10,9 @@ class Memo < Post
   end
 
   def read_from_console
-    puts
-    puts 'Введите текст'
+    puts '', 'Введите текст'
     puts 'Запись оканчивается строчкой'
-    puts '"end"'
-    puts
+    puts '"end"', ''
 
     line = nil
 

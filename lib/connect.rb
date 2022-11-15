@@ -4,6 +4,8 @@
 class Connect
   require 'mysql2'
 
+  def init_connect; end
+
   def save_to_db(query)
     # Initialize connection variables.
     host     = String('localhost')

@@ -9,12 +9,9 @@ class Post
     @text          = []
     @post_type     = nil
     @default_hash  = {
-      'post_id' => nil,
-      'post_type' => nil,
-      'created_at' => nil,
-      'text' => nil,
-      'url' => nil,
-      'due_date' => nil
+      'post_id' => nil, 'post_type' => nil,
+      'created_at' => nil, 'text' => nil,
+      'url' => nil, 'due_date' => nil
     }
   end
 
