@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require 'optparse'
-require 'optparse/time'
-require 'ostruct'
-
-# Define meny options
+# Define menu options
 class ScriptOptions < Optparse
   attr_accessor :limit, :type, :id
 

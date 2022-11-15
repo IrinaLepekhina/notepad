@@ -2,96 +2,48 @@
 
 # Connect to MySql
 class Connect
-  require 'mysql2'
-
-  def init_connect; end
-
-  def save_to_db(query)
+  def init_connect
     # Initialize connection variables.
-    host     = String('localhost')
-    database = String('posts')
-    username = String('root')
-    password = String('Bhbyf405201#')
 
-    # Initialize connection object.
-    client = Mysql2::Client.new(host: host, username: username, database: database, password: password)
-    puts 'Successfully created connection to database'
+    connect = {}
+    connect[:host] = String('localhost')
+    connect[:database] = String('posts')
+    connect[:username] = String('root')
+    connect[:password] = String('Bhbyf405201#')
 
-    statement = client.prepare(query[:prepared_query])
-    statement.execute(*query[:values])
-
-    last_insert_id = client.last_id
-
-    # Error handling
-  rescue StandardError => e
-    puts e.message
-    # Cleanup
-  ensure
-    client&.close
-    puts 'Connection closed', ''
-    last_insert_id
+    connect
   end
 
-  def read_from_db(limit, id, type)
-    # Initialize connection variables.
-    host     = String('localhost')
-    database = String('posts')
-    username = String('root')
-    password = String('Bhbyf405201#')
+  def execute_sql(query)
+    connect = init_connect
+    client = Mysql2::Client.new(host: connect[:host], username: connect[:username], database: connect[:database],
+                                password: connect[:password])
+    puts '', 'Successfully created connection to database'
 
-    # Initialize connection object.
-    client = Mysql2::Client.new(host: host, username: username, database: database, password: password)
-    puts 'Successfully created connection to database'
+    statement = client.prepare(query[:prepared_query])
+    result    = statement.execute(*query[:values])
 
-    if !id.nil?
-      # 1 post
-      statement = client.prepare('SELECT * FROM posts WHERE post_id = ?')
-      result_db = statement.execute(id)
-
-      result = []
-      result_db.each do |row|
-        result << row
-      end
-      result = result.first # 1 and only 1
-
-      # filling up
-      if result.nil?
-        puts "Post #{id} is not found"
-        result
-      else
-        choice = result['post_type']
-
-        post   = Creator.generate_read(choice)
-        post.load_data(result)
-        post
-      end
-
-    else
-      # table
-      params = {}
-
-      params['post_type'] = type   unless type.nil?
-      params['limit']     = limit  unless limit.nil?
-      puts params
-
-      query  = 'SELECT * FROM posts '
-      query += 'WHERE post_type = ? ' unless type.nil?
-      query += 'ORDER by post_id DESC '
-      query += 'LIMIT ? ;' unless limit.nil?
-
-      values = params.values
-
-      puts prepared = { prepared_query: query, values: values }
-
-      statement = client.prepare(prepared[:prepared_query])
-      result    = statement.execute(*prepared[:values])
-
-    end
+    last_insert_id = client.last_id
+    { result: result, last_insert_id: last_insert_id }
   rescue StandardError => e
     puts e.message
   ensure
     client&.close
     puts 'Connection closed', ''
-    result
+  end
+
+  def prepare_sql(limit, id, type)
+    params = {}
+    params['post_id']   = id    unless id.nil?
+    params['post_type'] = type  unless type.nil?
+    params['limit']     = limit unless limit.nil?
+
+    query  = 'SELECT * FROM posts '
+    query += 'WHERE post_id = ? ' unless id.nil?
+    query += 'WHERE post_type = ? ' unless type.nil?
+    query += 'ORDER by post_id DESC '
+    query += 'LIMIT ? ;' unless limit.nil?
+
+    { prepared_query: query, values: params.values }
   end
 end

@@ -22,6 +22,7 @@ require "#{current_path}/lib/post.rb"
 require "#{current_path}/lib/memo.rb"
 require "#{current_path}/lib/task.rb"
 require "#{current_path}/lib/link.rb"
+
 require "#{current_path}/lib/connect.rb"
 
 require "#{current_path}/factory/formatter.rb"
@@ -31,20 +32,17 @@ require "#{current_path}/factory/creator_task.rb"
 require "#{current_path}/factory/creator_link.rb"
 
 require 'optparse'
-require 'optparse/time'
-require 'ostruct'
+# require 'optparse/time'
+# require 'ostruct'
 
-pp options = Optparse.new.parse(ARGV)
+options = Optparse.new.parse(ARGV)
 
-post = Connect.new.read_from_db(options.limit, options.id, options.type)
+query = Connect.new.prepare_sql(options.limit, options.id, options.type)
 
-if post.is_a? Post
-  # один объект класса Post
-  puts "Запись #{post.class.name}, id = #{options.id}"
+post = Connect.new.execute_sql(query)[:result]
 
-  puts post.to_string
-elsif post.nil?
-  puts 'See u soon'
+if post.first.nil?
+  puts 'Post isn\'t found. See u soon.'
 else
   # несколько объектов, показываем таблицу
 
@@ -60,7 +58,7 @@ else
     puts
 
     row.each do |element|
-      element_text = "| #{element.to_s.delete("\n")[0..17]}"
+      element_text = "| #{element[1].to_s.delete("\n")[0..17]}"
 
       element_text << ' ' * (21 - element_text.size)
 

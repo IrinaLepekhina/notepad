@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'optparse'
-require 'optparse/time'
-require 'ostruct'
-
 # Parse options
 class Optparse
   attr_reader :parser, :options
