@@ -1,12 +1,31 @@
-class Formatter
+# frozen_string_literal: true
 
-  def self.for(choice, post_types)
-    case post_types[choice]
-    when "Memo"
+# Factory Method, detects Post children
+class Formatter
+  def post_types
+    Post.types
+  end
+
+  def self.for(choice, types)
+    case types[choice]
+    when 'Memo'
       CreatorMemo.new
-    when "Link"
+    when 'Link'
       CreatorLink.new
-    when "Task"
+    when 'Task'
+      CreatorTask.new
+    else
+      raise 'Unsupported type of report'
+    end
+  end
+
+  def self.read_for(choice)
+    case choice
+    when 'Memo'
+      CreatorMemo.new
+    when 'Link'
+      CreatorLink.new
+    when 'Task'
       CreatorTask.new
     else
       raise 'Unsupported type of report'
