@@ -32,15 +32,10 @@ class Memo < Post
     [@text, post_id]
   end
 
-  def to_db_hash(table)
+  def to_db_hash
     attr_hash = super.merge({ 'text' => @text.join("\n\r") })
-    db_hash   = default_hash.merge(attr_hash)
 
-    substituted_columns = db_hash.keys.map { '?' }.join(', ')
-    prepared_query      = "INSERT INTO #{table} VALUES (#{substituted_columns});"
-    values              = db_hash.values
-
-    { prepared_query: prepared_query, values: values }
+    default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)

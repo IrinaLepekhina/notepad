@@ -39,7 +39,7 @@ require 'optparse'
 
 options = Optparse.new.parse(ARGV)
 
-query = Connect.new.prepare_sql(options.limit, options.id, options.type)
+query = Connect.new.prepare_sql_read(options.limit, options.id, options.type)
 
 post = Connect.new.execute_sql(query)[:result]
 

@@ -20,24 +20,19 @@ class Link < Post
 
   def to_string
     time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\r"
+    @text.unshift(time_string)
     post_id = "Post id: #{@post_id}\n\r"
 
-    [@url, @text, time_string, post_id]
+    [@url, @text, post_id]
   end
 
-  def to_db_hash(table)
+  def to_db_hash
     attr_hash = super.merge({
                               'text' => @text,
                               'url' => @url
                             })
 
-    db_hash = default_hash.merge(attr_hash)
-
-    substituted_columns = db_hash.keys.map { '?' }.join(', ')
-    prepared_query      = "INSERT INTO #{table} VALUES (#{substituted_columns});"
-    values              = db_hash.values
-
-    { prepared_query: prepared_query, values: values }
+    default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)

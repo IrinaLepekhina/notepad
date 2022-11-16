@@ -30,19 +30,13 @@ class Task < Post
     [deadline, @text, time_string, post_id]
   end
 
-  def to_db_hash(table)
+  def to_db_hash
     attr_hash = super.merge({
                               'text' => @text,
                               'due_date' => @due_date.to_s
                             })
 
-    db_hash = default_hash.merge(attr_hash)
-
-    substituted_columns = db_hash.keys.map { '?' }.join(', ')
-    prepared_query      = "INSERT INTO #{table} VALUES (#{substituted_columns});"
-    values              = db_hash.values
-
-    { prepared_query: prepared_query, values: values }
+    default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)

@@ -45,7 +45,7 @@ end
 entry = Creator.generate(choice, types)
 entry.read_from_console
 
-query = entry.to_db_hash('posts')
+query = Connect.new.prepare_sql_write(entry)
 
 id = Connect.new.execute_sql(query)[:last_insert_id]
 

@@ -23,6 +23,17 @@ class Post
     ObjectSpace.each_object(Class).select { |klass| klass < self }.map.with_index(1) { |x, i| [i, x.name] }.to_h
   end
 
+  def to_db_hash
+    { 'post_type' => self.class.name, 'created_at' => @created_at.strftime('%Y-%m-%d').to_s }
+  end
+
+  def load_data(data_hash)
+    @created_at   = Time.parse(data_hash['created_at'].to_s)
+  end
+
+  ## Save as local text file
+  ## Not using
+
   def save
     file = File.new(file_path, 'w:UTF-8')
     to_string.each do |string|
@@ -36,13 +47,5 @@ class Post
     current_path = File.dirname(__FILE__)
     file_name    = @created_at.strftime("#{self.class.name}_%Y-%m-%d_%H_%M.txt")
     "#{current_path}/../user_data/#{file_name}"
-  end
-
-  def to_db_hash(_table)
-    { 'post_type' => self.class.name, 'created_at' => @created_at.strftime('%Y-%m-%d').to_s }
-  end
-
-  def load_data(data_hash)
-    @created_at   = Time.parse(data_hash['created_at'].to_s)
   end
 end
