@@ -31,7 +31,7 @@ puts
 puts 'Что хотите записать в блокнот?'
 puts
 
-types = Formatter.new.post_types
+types  = Formatter.new.post_types
 
 choice = -1
 
@@ -47,6 +47,6 @@ entry.read_from_console
 
 query = Connect.new.prepare_sql_write(entry)
 
-id = Connect.new.execute_sql(query)[:last_insert_id]
+id    = Connect.new.execute_sql(query)[:last_insert_id]
 
 puts "Запись сохранена, id = #{id}"

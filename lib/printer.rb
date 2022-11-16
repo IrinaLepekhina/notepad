@@ -22,14 +22,31 @@ class Printer
     if post.first.nil?
       puts 'Post isn\'t found. See u soon.'
     else
-      # Several objects, showing the table
       puts 'Table:'
       table_banner
+
+      # Print table
       post.each do |row|
         puts
         filling_table(row)
       end
       puts
+    end
+  end
+
+  def print_array(post)
+    if post.first.nil?
+      puts 'Post isn\'t found. See u soon.'
+    else
+      puts '', 'Ruby array:'
+
+      filling_array(post)
+
+      # Print array
+      arr.each do |element|
+        puts element.to_string
+      end
+
     end
   end
 
@@ -44,23 +61,7 @@ class Printer
     print '|'
   end
 
-  def print_array(post)
-    if post.first.nil?
-      puts 'Post isn\'t found. See u soon.'
-    else
-      puts '', 'Ruby array:'
-
-      to_arr(post)
-
-      # Print array
-      arr.each do |element|
-        puts element.to_string
-      end
-
-    end
-  end
-
-  def to_arr(post)
+  def filling_array(post)
     # Write table to ruby array
     post.each do |row|
       choice = row['post_type']
