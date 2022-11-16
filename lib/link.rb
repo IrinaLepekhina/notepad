@@ -2,7 +2,7 @@
 
 # Post child
 class Link < Post
-  attr_accessor :created_at, :text, :url, :post_type
+  attr_accessor :created_at, :text, :url, :post_type, :post_id
 
   def initialize
     super
@@ -19,9 +19,10 @@ class Link < Post
   end
 
   def to_string
-    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\r"
+    post_id = "Post id: #{@post_id}\n\r"
 
-    [@url, @text, time_string]
+    [@url, @text, time_string, post_id]
   end
 
   def to_db_hash(table)

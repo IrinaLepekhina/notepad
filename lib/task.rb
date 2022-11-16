@@ -4,7 +4,7 @@ require 'date'
 
 # Post child
 class Task < Post
-  attr_accessor :created_at, :text, :due_date, :post_type
+  attr_accessor :created_at, :text, :due_date, :post_type, :post_id
 
   def initialize
     super
@@ -24,9 +24,10 @@ class Task < Post
 
   def to_string
     deadline    = "Крайний срок: #{@due_date.strftime('%Y.%m.%d')}"
-    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\r"
+    post_id = "Post id: #{@post_id}\n\r"
 
-    [deadline, @text, time_string]
+    [deadline, @text, time_string, post_id]
   end
 
   def to_db_hash(table)
@@ -48,6 +49,7 @@ class Task < Post
     super(data_hash)
 
     @text     = data_hash['text']
-    @due_date = Date.parse(data_hash['due_date'])
+    @due_date = Date.parse(data_hash['due_date'].to_s)
+    @post_id  = data_hash['post_id']
   end
 end

@@ -2,7 +2,7 @@
 
 # Post child
 class Memo < Post
-  attr_accessor :created_at, :text, :post_type
+  attr_accessor :created_at, :text, :post_type, :post_id
 
   def initialize
     super
@@ -25,8 +25,11 @@ class Memo < Post
   end
 
   def to_string
-    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\r"
     @text.unshift(time_string)
+    post_id = "Post id: #{@post_id}\n\r"
+
+    [@text, post_id]
   end
 
   def to_db_hash(table)
@@ -44,5 +47,6 @@ class Memo < Post
     super(data_hash)
 
     @text = data_hash['text'].split('\n\r')
+    @post_id = data_hash['post_id']
   end
 end

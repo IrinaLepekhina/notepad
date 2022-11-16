@@ -23,6 +23,8 @@ require "#{current_path}/lib/memo.rb"
 require "#{current_path}/lib/task.rb"
 require "#{current_path}/lib/link.rb"
 
+require "#{current_path}/lib/printer.rb"
+
 require "#{current_path}/lib/connect.rb"
 
 require "#{current_path}/factory/formatter.rb"
@@ -41,32 +43,6 @@ query = Connect.new.prepare_sql(options.limit, options.id, options.type)
 
 post = Connect.new.execute_sql(query)[:result]
 
-if post.first.nil?
-  puts 'Post isn\'t found. See u soon.'
-else
-  # несколько объектов, показываем таблицу
+Printer.new.print_table(post)
 
-  print '|       post_id      '
-  print '|     @post_type     '
-  print '|     @created_at    '
-  print '|       @text        '
-  print '|        @url        '
-  print '|     @due_date      '
-  print '|'
-
-  post.each do |row|
-    puts
-
-    row.each do |element|
-      element_text = "| #{element[1].to_s.delete("\n")[0..17]}"
-
-      element_text << ' ' * (21 - element_text.size)
-
-      print element_text
-    end
-
-    print '|'
-  end
-
-  puts
-end
+Printer.new.print_array(post)
