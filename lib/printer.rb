@@ -65,7 +65,7 @@ class Printer
     # Write table to ruby array
     post.each do |row|
       choice = row['post_type']
-      post = Creator.generate_read(choice)
+      post = Creator.generate(choice)
       post.load_data(row)
       arr.push(post)
     end

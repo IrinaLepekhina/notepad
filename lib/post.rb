@@ -3,24 +3,46 @@
 # Post
 class Post
   attr_accessor :created_at, :text, :post_type, :default_hash
-
-  def initialize
-    @created_at    = Time.now
-    @text          = []
-    @post_type     = nil
-    @default_hash  = {
-      'post_id' => nil, 'post_type' => nil,
-      'created_at' => nil, 'text' => nil,
-      'url' => nil, 'due_date' => nil
+  
+  params = {
+    created_at: Time.now,
+    text: [],
+    post_type: nil,
+    default_hash: {    ##### собрать со всех потомков названия их аттрибутов
+      'post_id' => nil, 
+      'post_type' => nil,
+      'created_at' => nil, 
+      'text' => nil,
+      'url' => nil, 
+      'due_date' => nil
     }
+  }
+  
+  def initialize params = {}
+    params.each { |key, value| send key, value }
   end
+  
+
+  # def initialize
+  #   @created_at    = Time.now
+  #   @text          = []
+  #   @post_type     = nil
+  #   @default_hash  = {
+  #     'post_id' => nil, 
+  #     'post_type' => nil,
+  #     'created_at' => nil, 
+  #     'text' => nil,
+  #     'url' => nil, 
+  #     'due_date' => nil
+  #   }
+  # end
 
   def read_from_console; end
 
   def to_string; end
 
   def self.types
-    ObjectSpace.each_object(Class).select { |klass| klass < self }.map.with_index(1) { |x, i| [i, x.name] }.to_h
+    ObjectSpace.each_object(Class).select { |klass| klass < self }.map.with_index(1) { |x, i| [i, x.name] }.to_h ## singleton_class?
   end
 
   def to_db_hash

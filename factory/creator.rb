@@ -6,12 +6,8 @@ class Creator
     Post.new
   end
 
-  def self.generate(choice, types)
-    Formatter.for(choice, types).factory_method
-  end
-
-  def self.generate_read(choice)
-    Formatter.read_for(choice).factory_method
+  def self.generate(choice)
+    Formatter.for(choice).factory_method
   end
 
   # не использую. список наследников

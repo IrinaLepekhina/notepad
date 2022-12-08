@@ -32,17 +32,16 @@ puts 'Что хотите записать в блокнот?'
 puts
 
 types  = Formatter.new.post_types
-
 choice = -1
 
-until choice.positive? && choice <= types.size
+until choice.between?(1, types.size)
   types.each do |i, type|
     puts "#{i} create Post:\t #{type}"
   end
   choice = $stdin.gets.chomp.to_i
 end
 
-entry = Creator.generate(choice, types)
+entry = Creator.generate(types[choice])
 entry.read_from_console
 
 query = Connect.new.prepare_sql_write(entry)

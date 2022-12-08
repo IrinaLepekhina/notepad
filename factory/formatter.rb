@@ -6,29 +6,10 @@ class Formatter
     Post.types
   end
 
-  def self.for(choice, types)
-    case types[choice]
-    when 'Memo'
-      CreatorMemo.new
-    when 'Link'
-      CreatorLink.new
-    when 'Task'
-      CreatorTask.new
-    else
-      raise 'Unsupported type of report'
-    end
-  end
-
-  def self.read_for(choice)
-    case choice
-    when 'Memo'
-      CreatorMemo.new
-    when 'Link'
-      CreatorLink.new
-    when 'Task'
-      CreatorTask.new
-    else
-      raise 'Unsupported type of report'
-    end
+  def self.for(choice)
+    post_creator = "Creator#{choice}"
+    one = Object.const_get post_creator.to_s
+    one.new
+    #   raise 'Unsupported type of report'
   end
 end

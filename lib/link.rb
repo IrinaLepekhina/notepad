@@ -20,7 +20,7 @@ class Link < Post
 
   def to_string
     time_string = "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\r"
-    @text.unshift(time_string)
+    @text.insert(0, time_string)
     post_id = "Post id: #{@post_id}\n\r"
 
     [@url, @text, post_id]
