@@ -36,7 +36,7 @@ class Task < Post
                               'due_date' => @due_date.to_s
                             })
 
-    default_hash.merge(attr_hash)
+    @@default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)

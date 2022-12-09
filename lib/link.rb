@@ -32,7 +32,7 @@ class Link < Post
                               'url' => @url
                             })
 
-    default_hash.merge(attr_hash)
+    @@default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)

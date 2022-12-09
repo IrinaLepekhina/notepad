@@ -14,9 +14,8 @@ class Connect
     connect
   end
 
-  def prepare_sql_write(entry)
-    db_hash = entry.to_db_hash
-
+  def prepare_sql_write(db_hash)
+    
     substituted_columns = db_hash.keys.map { '?' }.join(', ')
     prepared_query      = "INSERT INTO #{init_connect[:database]} VALUES (#{substituted_columns});"
     values              = db_hash.values

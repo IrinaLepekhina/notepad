@@ -34,14 +34,14 @@ require "#{current_path}/factory/creator_task.rb"
 require "#{current_path}/factory/creator_link.rb"
 
 require 'optparse'
-# require 'optparse/time'
-# require 'ostruct'
 
 options = Optparse.new.parse(ARGV)
 
-query   = Connect.new.prepare_sql_read(options.limit, options.id, options.type)
+connect = Connect.new
 
-post    = Connect.new.execute_sql(query)[:result]
+query   = connect.prepare_sql_read(options.limit, options.id, options.type)
+
+post    = connect.execute_sql(query)[:result]
 
 Printer.new.print_table(post)
 

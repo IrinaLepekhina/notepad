@@ -2,40 +2,22 @@
 
 # Post
 class Post
-  attr_accessor :created_at, :text, :post_type, :default_hash
+  attr_accessor :created_at, :text, :post_type
   
-  params = {
-    created_at: Time.now,
-    text: [],
-    post_type: nil,
-    default_hash: {    ##### собрать со всех потомков названия их аттрибутов
-      'post_id' => nil, 
-      'post_type' => nil,
-      'created_at' => nil, 
-      'text' => nil,
-      'url' => nil, 
-      'due_date' => nil
-    }
+  @@default_hash = {
+    'post_id' => nil, 
+    'post_type' => nil,
+    'created_at' => nil, 
+    'text' => nil,
+    'url' => nil, 
+    'due_date' => nil
   }
   
-  def initialize params = {}
-    params.each { |key, value| send key, value }
+  def initialize
+    @created_at    = Time.now
+    @text          = []
+    @post_type     = nil
   end
-  
-
-  # def initialize
-  #   @created_at    = Time.now
-  #   @text          = []
-  #   @post_type     = nil
-  #   @default_hash  = {
-  #     'post_id' => nil, 
-  #     'post_type' => nil,
-  #     'created_at' => nil, 
-  #     'text' => nil,
-  #     'url' => nil, 
-  #     'due_date' => nil
-  #   }
-  # end
 
   def read_from_console; end
 

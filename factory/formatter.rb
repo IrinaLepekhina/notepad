@@ -7,9 +7,9 @@ class Formatter
   end
 
   def self.for(choice)
-    post_creator = "Creator#{choice}"
-    one = Object.const_get post_creator.to_s
-    one.new
+    creator_name = "Creator#{choice}"
+    creator = Object.const_get creator_name.to_s
+    creator.new
     #   raise 'Unsupported type of report'
   end
 end

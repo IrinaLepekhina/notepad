@@ -44,8 +44,12 @@ end
 entry = Creator.generate(types[choice])
 entry.read_from_console
 
-query = Connect.new.prepare_sql_write(entry)
+db_hash = entry.to_db_hash
 
-id    = Connect.new.execute_sql(query)[:last_insert_id]
+connect = Connect.new
+
+query = connect.prepare_sql_write(db_hash)
+
+id    = connect.execute_sql(query)[:last_insert_id]
 
 puts "Запись сохранена, id = #{id}"

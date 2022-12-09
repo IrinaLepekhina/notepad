@@ -35,7 +35,7 @@ class Memo < Post
   def to_db_hash
     attr_hash = super.merge({ 'text' => @text.join("\n\r") })
 
-    default_hash.merge(attr_hash)
+    @@default_hash.merge(attr_hash)
   end
 
   def load_data(data_hash)
